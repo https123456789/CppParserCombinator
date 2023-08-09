@@ -20,12 +20,7 @@ TEST(NumberParser, MultiDigit) {
 
 TEST(NumberParser, StopsAtNonDigit) {
     NumberParser parser = NumberParser();
-    std::cerr << "Calling parser\n";
     ParserState results = cpp_parser_combinator::run(parser, "1234y");
-    std::cerr << results.results.size() << std::endl;
-    for (auto i: results.results)
-        std::cout << "\t" << i << '\n';
-    std::cerr << "Checking\n";
     EXPECT_STREQ(results.results[0].c_str(), "1234");
 }
 
