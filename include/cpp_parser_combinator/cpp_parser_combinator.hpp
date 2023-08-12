@@ -28,6 +28,14 @@ namespace cpp_parser_combinator {
         ParserState run(ParserState state) override;
     };
 
+    class StringParser: public Parser {
+      public:
+        StringParser(std::string target);
+        ParserState run(ParserState state) override;
+
+        std::string targetString;
+    };
+
     ParserState run(Parser& parser, std::string input);
 }
 

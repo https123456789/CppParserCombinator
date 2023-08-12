@@ -1,5 +1,4 @@
 #include <cpp_parser_combinator/cpp_parser_combinator.hpp>
-#include <iostream>
 #include <gtest/gtest.h>
 
 using cpp_parser_combinator::NumberParser;

@@ -1,6 +1,6 @@
 { pkgs }: {
 	deps = [
-		pkgs.gcc
+		pkgs.gcc13
 		pkgs.ccls
 		pkgs.gnumake
         pkgs.cmake

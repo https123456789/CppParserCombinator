@@ -1,9 +1,9 @@
 compile = "cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES && ln -sf build/compile_commands.json . && cmake --build build"
-run = "cd build && ctest"
+run = "cd build && ctest --output-on-failure"
 hidden = [".ccls-cache", "build", ".git"]
 
 [nix]
-channel = "stable-22_11"
+channel = "stable-23_05"
 
 [gitHubImport]
 requiredFiles = [".replit", "replit.nix"]
