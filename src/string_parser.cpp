@@ -6,36 +6,37 @@ using namespace cpp_parser_combinator;
 
 
 StringParser::StringParser(std::string target) {
-    targetString = target;
+    target_string = target;
 }
 
 ParserState StringParser::run(ParserState state) {
-    ParserState nextState(state);
+    ParserState next_state(state);
     
-    std::size_t found = state.input.substr(state.index).find(targetString);
+    std::size_t found = state.input.substr(state.index).find(target_string);
     
     if (found == std::string::npos) {
-        nextState.is_error = true;
-        nextState.error = fmt::format(
+        next_state.is_error = true;
+        next_state.error = fmt::format(
             "Target '{}' is not in '{}'",
-            targetString,
+            target_string,
             state.input
         );
-        nextState.results.clear();
-        return nextState;
+        next_state.results.clear();
+        return next_state;
     }
     if (found != 0) {
-        nextState.is_error = true;
-        nextState.error = fmt::format(
+        next_state.is_error = true;
+        next_state.error = fmt::format(
             "Target '{}' is not at the beginning of '{}'",
-            targetString,
+            target_string,
             state.input
         );
-        nextState.results.clear();
-        return nextState;
+        next_state.results.clear();
+        return next_state;
     }
 
-    nextState.results.push_back(std::string(targetString));
+    next_state.results.push_back(std::string(target_string));
+    next_state.index += target_string.length();
     
-    return nextState;
+    return next_state;
 }

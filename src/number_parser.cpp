@@ -5,26 +5,26 @@ using namespace cpp_parser_combinator;
 
 
 ParserState NumberParser::run(ParserState state) {
-    ParserState nextState(state);
+    ParserState next_state(state);
     std::string res = "";
 
     do {
-        char c = nextState.input[nextState.index++];
+        char c = next_state.input[next_state.index++];
 
         if (c < '0' || c > '9') {
             break;
         }
 
         res += c;
-    } while (nextState.index < nextState.input.size());
+    } while (next_state.index < next_state.input.size());
 
-    nextState.results.push_back(res);
+    next_state.results.push_back(res);
 
-    if (nextState.index - 1 == state.index) {
-        nextState.is_error = true;
-        nextState.error = "Expected digit but none where to be found.";
-        nextState.results.clear();
+    if (next_state.index - 1 == state.index) {
+        next_state.is_error = true;
+        next_state.error = "Expected digit but none were to be found";
+        next_state.results.clear();
     }
 
-    return nextState;
+    return next_state;
 }

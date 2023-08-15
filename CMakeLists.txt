@@ -2,6 +2,23 @@ cmake_minimum_required(VERSION 3.14)
 project(CppParserCombinator)
 include(FetchContent)
 
+macro(add_test test_name)
+    add_executable(
+        "${test_name}_test"
+        "test/${test_name}_test.cpp"
+    )
+    target_link_libraries(
+        "${test_name}_test"
+        CppParserCombinator
+        GTest::gtest_main
+    )
+    target_include_directories(
+        "${test_name}_test" PUBLIC
+        "${PROJECT_SOURCE_DIR}/include"
+    )
+    gtest_discover_tests("${test_name}_test")
+endmacro()
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #set(CMAKE_POSITION_INDEPENDENT_CODE TRUE)
@@ -26,6 +43,7 @@ add_library(
     src/run.cpp
     src/number_parser.cpp
     src/string_parser.cpp
+    src/sequence_of.cpp
 )
 target_include_directories(
     CppParserCombinator PUBLIC
@@ -38,38 +56,8 @@ target_link_libraries(CppParserCombinator fmt::fmt)
 ### Testing ###
 
 enable_testing()
-
-## NumberParser ##
-add_executable(
-    number_parser_test
-    test/number_parser_test.cpp
-)
-target_link_libraries(
-    number_parser_test
-    CppParserCombinator
-    GTest::gtest_main
-)
-target_include_directories(
-    number_parser_test PUBLIC
-    "${PROJECT_SOURCE_DIR}/include"
-)
-
-## StringParser ##
-
-add_executable(
-    string_parser_test
-    test/string_parser_test.cpp
-)
-target_link_libraries(
-    string_parser_test
-    CppParserCombinator
-    GTest::gtest_main
-)
-target_include_directories(
-    string_parser_test PUBLIC
-    "${PROJECT_SOURCE_DIR}/include"
-)
-
 include(GoogleTest)
-gtest_discover_tests(number_parser_test)
-gtest_discover_tests(string_parser_test)
+
+add_test(number_parser)
+add_test(string_parser)
+add_test(sequence_of)

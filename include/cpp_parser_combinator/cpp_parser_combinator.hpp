@@ -1,6 +1,7 @@
 #ifndef CPP_PARSER_COMBINATOR_HPP_
 #define CPP_PARSER_COMBINATOR_HPP_
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -33,7 +34,15 @@ namespace cpp_parser_combinator {
         StringParser(std::string target);
         ParserState run(ParserState state) override;
 
-        std::string targetString;
+        std::string target_string;
+    };
+
+    class SequenceOfParser: public Parser {
+      public:
+        SequenceOfParser(std::initializer_list<std::shared_ptr<Parser>> parser_list);
+        ParserState run(ParserState state) override;
+      private:
+        std::vector<std::shared_ptr<Parser>> parsers;
     };
 
     ParserState run(Parser& parser, std::string input);
